@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+
+require_relative '../lib/csv_tools.rb'
+
+if ARGV.length < 3
+  abort("Usage: #{File.basename($0)} CSV-FILE COLUMN-INDEX [COLUMN-INDEX ...]")
+end
+
+indices = ARGV[1..-1].map {|s| s.to_i}
+raise "Invalid indices #{ARGV[1..-1]}" if indices.any? {|i| i.nil?}
+CSVTools::csv_select(ARGV[0], indices)

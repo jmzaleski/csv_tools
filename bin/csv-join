@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+
+require_relative '../lib/csv_tools.rb'
+
+
+if ARGV.length != 3
+  abort("Usage: #{File.basename($0)} CSV-FILE1 CSV-FILE2 JOIN-BY-COLUMN")
+end
+
+CSVTools::csv_join(ARGV[0], ARGV[1], ARGV[2])

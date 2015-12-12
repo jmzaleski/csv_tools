@@ -18,7 +18,7 @@ rake install
 
 ## Examples
 
-With the following data files
+Using the following data files
 
 ```sh
 $ cat students.csv
@@ -36,7 +36,9 @@ student-id,Assignment 1,Assignment 2,Test
 4,92,80,75
 ```
 
-We can select specific columns
+#### Select
+
+Select specific columns, by index.
 
 ```sh
 $ csv_select marks.csv 0 3
@@ -47,7 +49,9 @@ student-id,Test
 4,75
 ```
 
-Join two files
+#### Join
+
+Join two files on a column (called `student-id`)
 
 ```sh
 $ csv_join students.csv marks.csv student-id
@@ -58,8 +62,9 @@ student-id,name,Assignment 1,Assignment 2,Test
 4,Allie,92,80,75
 ```
 
-Let's save the output of the previous command in a file called `joined.csv`,
-and keep only rows whose second column (i.e. at index 1) contains the string `ob`:
+#### Filter
+
+Keep rows whose second column (i.e. at index 1) contains the string `ob`
 
 ```sh
 $ csv_join students.csv marks.csv student-id > joined.csv

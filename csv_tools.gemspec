@@ -5,7 +5,7 @@ require 'csv_tools/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "csv_tools"
-  spec.version       = CsvTools::VERSION
+  spec.version       = CSVTools::VERSION
   spec.authors       = ["Joey Freund"]
   spec.email         = ["joeyfreund@gmail.com"]
 

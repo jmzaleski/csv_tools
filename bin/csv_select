@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require_relative '../lib/csv_tools.rb'
+require 'csv_tools'
 
 if ARGV.length < 3
   abort("Usage: #{File.basename($0)} CSV-FILE COLUMN-INDEX [COLUMN-INDEX ...]")

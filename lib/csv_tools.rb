@@ -1,4 +1,7 @@
 require 'csv'
+require "csv_tools/version"
+
+
 
 module CSVTools
 
@@ -27,11 +30,13 @@ module CSVTools
     raise "#{path1} does not have a column '#{join_by_column}'" if index1.nil?
     raise "#{path2} does not have a column '#{join_by_column}'" if index2.nil?
 
+    # Print the header line (join-by column is first, and appears only once)
     h1, h2 = [csv1.headers , csv2.headers]
     h1.delete_at(index1)
     h2.delete_at(index2)
     out.puts join_by_column + ',' + h1.join(",") + ',' + h2.join(',')
 
+    # Print the data rows ...
     hash1 = csv2hash(csv1, index1)
     hash2 = csv2hash(csv2, index2)
 

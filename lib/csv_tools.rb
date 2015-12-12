@@ -5,6 +5,10 @@ require "csv_tools/version"
 
 module CSVTools
 
+
+  DEFAULT_CSV_READ_OPTS = {headers: true, skip_blanks: true}
+
+
   # @param csv_obj [CSV::Table]
   # @param key_column_index [integer]
   # @return Hash[string --> Array of strings] Each row in csv_obj is an entry in the returned hash.
@@ -23,7 +27,7 @@ module CSVTools
 
 
   def CSVTools.csv_join(path1, path2, join_by_column, out = STDOUT)
-    csv1, csv2 = [path1, path2].map {|p| CSV.read(p, {headers: true})}
+    csv1, csv2 = [path1, path2].map {|p| CSV.read(p, DEFAULT_CSV_READ_OPTS)}
 
     # Make sure the join-by column exists in both CSV's
     index1, index2 = [csv1, csv2].map {|csv| csv.headers.index(join_by_column) }
@@ -62,7 +66,7 @@ module CSVTools
 
 
   def CSVTools.csv_select(path, column_indices, out = STDOUT)
-    csv = CSV.read(path, {headers: true})
+    csv = CSV.read(path, DEFAULT_CSV_READ_OPTS)
 
     out.puts select_values(csv.headers, column_indices).join(',')
     csv.each do |row|
@@ -72,7 +76,7 @@ module CSVTools
 
 
   def CSVTools.csv_filter(path, column_index, field_value, out = STDOUT)
-    csv = CSV.read(path, {headers: true})
+    csv = CSV.read(path, DEFAULT_CSV_READ_OPTS)
 
     out.puts csv.headers.join(',')
     csv.select {|row| row.fields[column_index].downcase.include? field_value.downcase} .each do |row|

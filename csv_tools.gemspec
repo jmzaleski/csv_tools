@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Joey Freund"]
   spec.email         = ["joeyfreund@gmail.com"]
 
-  spec.summary       = %q{A simple utility library for manipulating CSV files.}
-  spec.description   = %q{Perform operations such as select, filter and join.}
+  spec.summary       = %q{Command-line tools for CSV file manipulation.}
+  spec.description   = %q{Manipulate CSV files as if they were SQL tables.}
   spec.homepage      = "https://github.com/joeyfreund/csv_tools"
   spec.license       = "MIT"
 

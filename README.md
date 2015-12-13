@@ -9,11 +9,8 @@ At the moment, the following operations are supported:
 
 ## Installation
 
-
-For now, `cd` to the root of this repo and run
-
 ```
-rake install
+gem install csv_tools
 ```
 
 ## Examples

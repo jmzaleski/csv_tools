@@ -1,4 +1,5 @@
 require 'csv'
+require 'set'
 require "csv_tools/version"
 
 
@@ -9,17 +10,18 @@ module CSVTools
   DEFAULT_CSV_READ_OPTS = {headers: true, skip_blanks: true}
 
 
-  # @param csv_obj [CSV::Table]
-  # @param key_column_index [integer]
-  # @return Hash[string --> Array of strings] Each row in csv_obj is an entry in the returned hash.
-  def CSVTools.csv2hash(csv_obj, key_column_index)
+  # @param csv_table [CSV::Table]
+  # @param column_index [integer]
+  # @return Hash[string --> Array of string-arrays]
+  def CSVTools.group_by_column(csv_table, column_index)
     result = {}
-    csv_obj.each do |row|
-      key = row.fields[key_column_index]
-      values = row.fields[0...key_column_index] + row.fields[key_column_index + 1...row.fields.length]
-      raise "Duplicate key '#{key}' in #{csv_obj}" if result.has_key? key
-      result[key] = values
+
+    csv_table.group_by {|row| row.fields[column_index]} .each do |key, row_objects|
+      result[key] = row_objects.map  do |row|
+        row.fields[0...column_index] + row.fields[column_index + 1...row.fields.length]
+      end
     end
+
     return result
   end
 
@@ -41,19 +43,21 @@ module CSVTools
     out.puts join_by_column + ',' + h1.join(",") + ',' + h2.join(',')
 
     # Print the data rows ...
-    hash1 = csv2hash(csv1, index1)
-    hash2 = csv2hash(csv2, index2)
+    hash1 = group_by_column(csv1, index1)
+    hash2 = group_by_column(csv2, index2)
 
-    hash1.each do |key, values1|
-      values2 = hash2[key] || ([nil] * (csv2.headers.length - 1))
-      out.puts key + ',' + values1.join(',') + ',' + values2.join(',')
+    # And now ... JOIN the two CSV's (adding nil's for missing rows)
+    (hash1.keys + hash2.keys).to_set.each do |key|
+      rows1 = hash1[key] || [ [nil] * (csv1.headers.length - 1)]
+      rows2 = hash2[key] || [ [nil] * (csv2.headers.length - 1)]
+
+      rows1.each do |r1|
+        rows2.each do |r2|
+          out.puts key + ',' + r1.join(',') + ',' + r2.join(',')
+        end
+      end
     end
 
-    # Process entries in csv2 that are not in csv1
-    hash2.reject {|k, _| hash1.has_key? k} .each do |key, values2|
-      values1 = hash1[key] || ([nil] * (csv1.headers.length - 1))
-      out.puts key + ',' + values1.join(',') + ',' + values2.join(',')
-    end
   end
 
 

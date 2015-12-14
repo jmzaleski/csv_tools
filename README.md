@@ -6,6 +6,7 @@ At the moment, the following operations are supported:
  * Selecting specific columns (by index)
  * Filter rows, based on a specific field
  * Join two CSV files on a single column
+ * Enumerate the CSV headers (convenient for CSV files with many columns)
 
 ## Installation
 
@@ -70,4 +71,17 @@ $ csv_filter joined.csv 1 ob
 student-id,name,Assignment 1,Assignment 2,Test
 2,Bob,53,61,58
 3,Rob,85,88,87
+```
+
+#### Enum
+
+When working with CSV that have many columns, it is convenient to be able to
+enumerate the column-headers.
+
+```
+$ csv_enum marks.csv
+0	: student-id
+1	: Assignment 1
+2	: Assignment 2
+3	: Test
 ```

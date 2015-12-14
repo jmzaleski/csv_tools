@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+
+require 'csv'
+
+if ARGV.length != 1
+  abort("Usage: #{File.basename($0)} CSV-FILE")
+end
+
+CSV.open(ARGV[0], {headers: true}) do |csv|
+  csv.readline # Read the header line
+  csv.headers.each_with_index { |header, i| puts "#{i}\t: #{header}"}
+end

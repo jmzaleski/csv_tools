@@ -11,7 +11,7 @@ At the moment, the following operations are supported:
 ## Installation
 
 ```
-gem install csv_tools
+sudo gem install csv_tools #run as root
 ```
 
 ## Examples
